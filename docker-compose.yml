@@ -1,0 +1,34 @@
+version: "3"
+ 
+services:
+  uwsgi:
+    build:
+      context: .
+    environment:
+      - DJANGO_SETTINGS_MODULE=unyou.settings.production
+    volumes:
+      - ./docker_volumes/static:/code/unyou/static
+ 
+  db:
+    image: mysql:5.7
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+    volumes:
+      - ./docker_volumes/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=wjze5DMZ
+      - MYSQL_DATABASE=unyou
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=wjze5DMZ
+ 
+  app:
+    image: nginx
+    volumes:
+      - ./nginx/app.conf:/etc/nginx/nginx.conf
+    ports:
+      - 5000:80
+ 
+  static:
+    image: nginx
+    volumes:
+      - ./nginx/static.conf:/etc/nginx/nginx.conf
+      - ./docker_volumes/static:/static
