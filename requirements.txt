@@ -2,3 +2,8 @@ django
 django-cors-headers
 mysqlclient
 uwsgi
+django-bootstrap4
+django-crispy-forms
+django-pure-pagination
+django-import-export
+django-advanced-filters
